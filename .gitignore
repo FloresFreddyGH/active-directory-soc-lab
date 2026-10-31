@@ -1,0 +1,9 @@
+*.iso
+*.qcow2
+*.vmdk
+*.vdi
+*.log
+.env
+.env.*
+*password*
+*credential*
