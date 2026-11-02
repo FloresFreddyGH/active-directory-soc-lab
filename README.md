@@ -1,6 +1,6 @@
 # Active Directory SOC Lab
 
-**Status: In progress — AD DS role installed; domain promotion pending.**
+**Status: In progress — Domain created and verified; Windows client installed, domain join pending.**
 
 I am building this lab to understand Windows domain administration and investigate identity-related activity as I prepare for a SOC analyst internship. I perform the VM setup and lab exercises myself, using step-by-step guidance, and document what I can verify.
 
@@ -28,29 +28,40 @@ This project follows my [Wazuh SOC lab](https://github.com/FloresFreddyGH/wazuh-
 
 ![AD DS role installation and verification](screenshots/11-ad-dc01-ad-ds-role-installed.png)
 
-Installing the role does not create a domain or promote the server. Those steps are still pending.
+At the end of October 31, only the role was installed. Promotion was completed in the next session.
+
+## Completed on November 1, 2026
+
+- Verified DC01 time synchronization, changed its display time zone to Eastern, and checked updates and evaluation activation
+- Created the `soclab.test` forest/domain with NetBIOS name `SOCLAB` and Windows Server 2025 functional levels
+- Verified domain sign-in, AD DS/DNS/Netlogon services, DNS host and service records, SYSVOL/NETLOGON shares, and external name resolution
+- Created the SOCLab OU with LabUsers, Workstations, and Groups; corrected an accidentally nested OU
+- Created the fictional employee account Lamine Yamal and added it to `GG_Lab_Employees`
+- Installed Windows 11 Enterprise Evaluation in a separate client VM and reached the desktop as local `labadmin`
+
+![Domain and services verified](screenshots/18-ad-dc01-domain-and-services-verified.png)
 
 ## Environment
 
 | Component | Configuration | Status |
 |---|---|---|
 | Ubuntu host | Intel i5-14400F, 16 logical CPUs, 30 GiB RAM; 763 GB free disk at initial check | Verified |
-| `ad-dc01` | Windows Server 2025, 4 vCPUs, 6 GiB RAM, 80 GiB disk | Installed; not yet a domain controller |
+| `ad-dc01` | Windows Server 2025, 4 vCPUs, 6 GiB RAM, 80 GiB disk | Domain controller and DNS server for soclab.test |
 | Existing Wazuh server | From the previous lab | Planned monitoring destination; not connected to this server yet |
-| New Windows domain client | Planned 2 vCPUs, 6 GiB RAM, 80 GiB disk | Not created |
+| `ad-client01` | Windows 11 Enterprise Evaluation, 2 vCPUs, 6 GiB RAM, 80 GiB disk | Desktop reached; not domain joined |
 
-The VM is named `ad-dc01` in virt-manager and Windows is named `DC01`. Its static IPv4 address is `192.168.122.44/24`, with gateway and temporary DNS `192.168.122.1`. A matching DHCP reservation protects that address from reassignment. The default NAT network is shared with existing lab VMs; it is not a dedicated isolated AD network.
+The VM is named `ad-dc01` in virt-manager and Windows is named `DC01`. Its static IPv4 address is `192.168.122.44/24`, with gateway `192.168.122.1`. After promotion, its DNS client uses its own service through `::1` and `127.0.0.1`. A matching DHCP reservation protects that address from reassignment. The default NAT network is shared with existing lab VMs; it is not a dedicated isolated AD network.
 
 ## Planned next steps
 
-1. Verify updates, evaluation activation, and time synchronization
-2. Plan the domain name and DNS configuration
-3. Promote DC01 to a domain controller and create the lab domain with DNS
-4. Join a Windows client and practice users, groups, policies, and permissions
+1. Verify the client hostname and rename it to CLIENT01 if necessary
+2. Check client time zone, synchronization, updates, activation, and guest tools
+3. Configure client DNS to use DC01, verify domain discovery, and join soclab.test
+4. Move the client object into Workstations and test the employee's first domain sign-in
 5. Configure security auditing and Wazuh collection
-6. Generate controlled authentication and account/group changes, investigate the resulting records, and document conclusions
+6. Generate controlled authentication and account/group changes and investigate the resulting records
 
-These are planned activities, not completed detections. No domain, domain client, or AD security investigation has been completed yet.
+Client domain join, policy exercises, and SOC detections are still pending. Celebrity-inspired names represent fictional lab accounts, not actual affiliations.
 
 ## Documentation
 

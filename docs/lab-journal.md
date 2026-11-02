@@ -37,3 +37,23 @@ I wanted to understand why this matters for Active Directory. A future domain co
 Finally, I installed Active Directory Domain Services with its management tools. The result showed Success True, Restart Needed No, and the verification command showed the role as Installed. This is my stopping point: the software is installed, but I have not promoted DC01 or created a domain yet.
 
 Evidence: screenshots 06–11. Clipboard success was confirmed by my copying test; no service-status verification or full device-warning cleanup is claimed. Shutdown and snapshots have not been verified.
+
+## November 1, 2026 — Creating the domain and installing a client
+
+I started by checking DC01's hostname, IP configuration, and time. Windows Time reported a successful sync with time.windows.com. The displayed time was Pacific, so I changed it to Eastern and verified the result. I learned that the time zone changes how the clock is displayed, while synchronization keeps the actual clock aligned. I also accidentally typed a trailing backslash on Get-Date, corrected it, and reran the command.
+
+I installed the offered Windows updates and eventually reached the “You're up to date” screen. Activation showed Windows Server 2025 Standard Evaluation as Active. Then I opened the AD DS promotion wizard and created a new forest named soclab.test, using SOCLAB as the NetBIOS name. I kept Windows Server 2025 functional levels, enabled DNS and Global Catalog, and kept the default database, log, and SYSVOL paths. I set the DSRM recovery password privately.
+
+The DNS delegation warning initially needed an explanation: this new lab has no parent DNS zone configured to delegate to it. The prerequisites check passed, and I proceeded with promotion. After the restart, whoami showed soclab\administrator. Get-ADDomain returned soclab.test and DC01.soclab.test as the PDC emulator. DNS, Netlogon, and NTDS were all running.
+
+I verified DC01's A record and the LDAP domain-controller SRV record. Its DNS client now points to loopback addresses, meaning its own DNS service. SYSVOL and NETLOGON were present, and an external lookup of microsoft.com also worked. These are specific successful checks, not a claim of a comprehensive domain health audit.
+
+In Active Directory Users and Computers, I saw DC01 in Domain Controllers and created SOCLab with LabUsers, Workstations, and Groups. I accidentally created Workstations inside LabUsers. Moving it initially returned Access denied; I followed the instructions to temporarily remove accidental-deletion protection, move it, and restore protection. The corrected hierarchy is visible in the screenshot. Restored protection still needs independent verification.
+
+I wanted the lab to feel personal, so I chose recognizable celebrity-inspired names for fictional employee accounts. My first account is Lamine Yamal. I verified its initial membership was Domain Users, then created GG_Lab_Employees and added Lamine. No resource permissions were assigned to the group in this session. I was instructed to require a password change at first sign-in; that setting and the exact logon name still need verification.
+
+Finally, I created ad-client01 with 2 vCPUs, 6 GiB RAM, an 80 GiB disk, and the same default NAT network. I selected Windows 11 manually because ISO autodetection did not identify it, configured an emulated CRB TPM 2.0, and selected the Microsoft-key UEFI firmware. Windows 11 Enterprise Evaluation installed and reached the desktop as local labadmin after setup updates.
+
+I stopped at that first desktop. The client has not joined the domain. Its Windows hostname, IP, DNS, time zone, activation status, and final update status have not yet been checked. Its displayed clock appears different from the host/session time, so time verification is on the resume checklist. Shutdown was recommended for both VMs but not independently confirmed. I have not configured Wazuh collection or completed an AD security investigation yet.
+
+Evidence: screenshots 12–29. No passwords or recovery answers are recorded in this journal.

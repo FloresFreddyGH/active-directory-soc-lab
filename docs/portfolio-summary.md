@@ -2,10 +2,12 @@
 
 **Title:** Active Directory SOC Lab
 
-**Status:** In progress — AD DS role installed; domain promotion pending
+**Status:** In progress — domain created and verified; client installed, domain join pending
 
-I am building an Active Directory lab on Ubuntu with QEMU/KVM to practice Windows domain administration and eventually investigate authentication and account changes in Wazuh. I configured and installed a Windows Server 2025 VM, renamed it DC01, resolved a VirtIO/guest-tools clipboard issue, and configured a static IP backed by a libvirt DHCP reservation. I verified gateway reachability, DNS resolution, and outbound TCP connectivity before installing Active Directory Domain Services and its management tools.
+I built a Windows Server 2025 domain controller on Ubuntu/QEMU/KVM and created the soclab.test domain with DNS. I verified domain authentication for the Administrator account, AD services, DNS host and service records, SYSVOL/NETLOGON shares, and external name resolution. I organized OUs, corrected a misplaced OU after troubleshooting deletion protection, created a fictional employee account, and verified security-group membership.
 
-This stage demonstrates server preparation, basic network troubleshooting, and documenting verified results. DC01 has not yet been promoted to a domain controller. Domain creation, a joined client, security auditing, and Wazuh investigations remain planned work.
+I also installed a separate Windows 11 Enterprise Evaluation client with UEFI and an emulated TPM 2.0, reaching the desktop as a local user. Earlier work included driver/clipboard troubleshooting, a static server IP, and a matching libvirt DHCP reservation.
 
-Evidence: screenshots 01–11 and the October 30–31 journal entries. This is a separate project from my completed Wazuh and Azure labs.
+This project develops the identity and Windows administration foundation for future SOC investigations. Client domain join, employee domain sign-in, audit configuration, Wazuh collection, and detection exercises remain pending. Celebrity-inspired account names are fictional lab identities, not affiliations.
+
+Evidence: screenshots 01–29 and the October 30, October 31, and November 1 journal entries. This is separate from my completed Wazuh and Azure labs.
