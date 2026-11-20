@@ -39,3 +39,15 @@ Screenshot 11 was also copied with a normalized filename; the original was left 
 - [29-ad-client01-first-desktop](29-ad-client01-first-desktop.png)
 
 Screenshot 13 uses the later up-to-date capture, not the earlier in-progress image with a similar name. Screenshot 29 was copied from the supplied desktop attachment. Original files remain unchanged. Screenshot filenames describe intended evidence; client hostname and guest security settings still require verification.
+
+## November 19 — Client domain join and Freddy sign-in
+
+- [30-ad-client01-time-sync-verified](30-ad-client01-time-sync-verified.png)
+- [31-ad-client01-domain-dns-discovery](31-ad-client01-domain-dns-discovery.png)
+- [32-ad-client01-domain-join-verified](32-ad-client01-domain-join-verified.png)
+- [33-ad-freddy-flores-user-created](33-ad-freddy-flores-user-created.png)
+- [34-ad-employee-group-members-verified](34-ad-employee-group-members-verified.png)
+- [35-ad-freddy-first-password-change](35-ad-freddy-first-password-change.png)
+- [36-ad-freddy-domain-sign-in-verified](36-ad-freddy-domain-sign-in-verified.png)
+
+Screenshots 30–36 were copied from supplied conversation attachments. Screenshot 35 shows only password-change confirmation, not a password. Earlier pending-state captions describe the earlier sessions; screenshot 36 verifies the latest sign-in milestone.

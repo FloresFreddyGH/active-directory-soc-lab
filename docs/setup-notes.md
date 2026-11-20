@@ -137,12 +137,53 @@ The Workstations OU was moved out of LabUsers after an Access denied error. Inst
 - Installer selected from the existing CLIENTENTERPRISEEVAL ISO in Downloads
 - Guest Secure Boot/TPM status, activation, and installed OS build not independently queried
 
+## November 19 client configuration and verification
+
+Client guest tools were installed from the existing VirtIO ISO; clipboard success was reported by the user. Windows was renamed from DESKTOP-CC92C58 to CLIENT01 and restarted. The client used DHCP IPv4 `192.168.122.51`, gateway `192.168.122.1`, and subsequently DNS `192.168.122.44`.
+
+Commands performed in elevated client PowerShell:
+
+```powershell
+Set-TimeZone -Id "Eastern Standard Time"
+Rename-Computer -NewName "CLIENT01" -Restart
+# After restarting:
+hostname
+Start-Service W32Time
+w32tm /resync
+w32tm /query /status
+w32tm /stripchart /computer:time.windows.com /dataonly /samples:5
+w32tm /resync /rediscover
+w32tm /query /status
+Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ServerAddresses "192.168.122.44"
+Get-NetIPConfiguration
+Resolve-DnsName -Type SRV _ldap._tcp.dc._msdcs.soclab.test
+Add-Computer -DomainName "soclab.test" -Credential "SOCLAB\Administrator" -Restart
+```
+
+Initial resync failed with no time data; the rediscover attempt succeeded. Final pre-join status showed Leap Indicator 0, stratum 5, source time.windows.com, and a fresh successful synchronization. Post-join time-source behavior has not been verified.
+
+After restart, the local labadmin session verified membership:
+
+```powershell
+Get-CimInstance Win32_ComputerSystem | Select-Object Name, Domain, PartOfDomain
+whoami
+```
+
+Results: CLIENT01 / soclab.test / True, and client01\labadmin.
+
+On DC01, Freddy Flores was created in SOCLab/LabUsers and added to GG_Lab_Employees. The screenshot shows both Freddy and Lamine in that group. On CLIENT01, Freddy completed the required password change, reached the desktop, and verified in ordinary PowerShell:
+
+```powershell
+whoami
+hostname
+```
+
+Results: `soclab\freddy.flores` and `CLIENT01`. No administrative group membership or effective-access audit is claimed for Freddy from these screenshots alone.
+
 ## Resume here
 
-1. Start DC01 first, then ad-client01. Verify the client's Windows hostname, network configuration, time zone, and clock synchronization.
-2. Rename the client to CLIENT01 if necessary. Check updates, evaluation activation, and guest tools/clipboard.
-3. Configure the client's DNS to use `192.168.122.44`, verify domain discovery, and join `soclab.test`.
-4. Move the client object into SOCLab/Workstations. Verify the user's logon name and password-change requirement before testing the first domain sign-in.
-5. Verify restored Workstations OU deletion protection and plan auditing/Wazuh collection before detection exercises.
+1. Start DC01, then CLIENT01. Verify the client computer object's current location and move it to SOCLab/Workstations.
+2. Verify client domain time synchronization after joining, updates, and evaluation activation. Verify Workstations OU deletion protection was restored.
+3. Plan and configure security auditing and Wazuh collection, then investigate controlled authentication and account/group events.
 
-No client domain join, shutdown, snapshot, policy deployment, or Wazuh integration is claimed by these notes. The November 1 documentation stops at the client desktop.
+Client domain join and Freddy's domain sign-in are verified. Policy deployment, Wazuh integration, shutdown, and snapshots remain unverified or pending.

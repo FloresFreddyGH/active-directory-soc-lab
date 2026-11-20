@@ -57,3 +57,19 @@ Finally, I created ad-client01 with 2 vCPUs, 6 GiB RAM, an 80 GiB disk, and the 
 I stopped at that first desktop. The client has not joined the domain. Its Windows hostname, IP, DNS, time zone, activation status, and final update status have not yet been checked. Its displayed clock appears different from the host/session time, so time verification is on the resume checklist. Shutdown was recommended for both VMs but not independently confirmed. I have not configured Wazuh collection or completed an AD security investigation yet.
 
 Evidence: screenshots 12–29. No passwords or recovery answers are recorded in this journal.
+
+## November 19, 2026 — Joining CLIENT01 and signing in with my domain account
+
+I resumed on the Windows 11 client and found that clipboard sharing did not work there yet. I mounted the existing VirtIO ISO, ran virtio-win-guest-tools, and confirmed copying worked afterward. This reminded me that guest tools need to be installed separately in each VM.
+
+The computer was still named DESKTOP-CC92C58. I renamed it CLIENT01 and restarted, then verified the hostname. Its IP was 192.168.122.51, with gateway 192.168.122.1. I changed its time zone from Pacific to Eastern, but the Windows Time service was stopped. Starting the service alone did not immediately fix synchronization: resync reported no time data and the status showed Leap Indicator 3 and stratum 0.
+
+I tested time.windows.com with five stripchart samples. They returned offsets of roughly 2–11 milliseconds. Running resync with rediscover succeeded, and a fresh status showed Leap Indicator 0, stratum 5, and a successful sync at 11:25:17 PM on November 19. Earlier output briefly displayed November 20 before the clock settled; I used the later synchronized output for the session date. I learned to distinguish a time-zone setting, clock accuracy, and the service's current synchronization status.
+
+I set CLIENT01's DNS to DC01 at 192.168.122.44 while retaining DHCP for its IP. The LDAP SRV lookup found dc01.soclab.test on port 389. I then joined soclab.test and restarted. I initially worried that seeing labadmin meant I had done something wrong. The checks showed CLIENT01, soclab.test, and PartOfDomain True, while whoami showed client01\labadmin. The computer was domain joined even though that session used a local account.
+
+On DC01, I created my own regular domain account, Freddy Flores, and added it to GG_Lab_Employees alongside the fictional Lamine Yamal account. On CLIENT01 I signed out of labadmin and signed in as SOCLAB\freddy.flores. Windows required the first password change and confirmed it succeeded. At the desktop, ordinary PowerShell returned soclab\freddy.flores from whoami and CLIENT01 from hostname. That is today's final verified milestone.
+
+I performed these steps myself and documented the results. The domain sign-in is complete, but I have not yet collected its security events in Wazuh or completed a detection exercise. Moving the computer object to Workstations and verifying post-join domain time behavior remain next-session work. No shutdown or snapshot is claimed.
+
+Evidence: screenshots 30–36, copied from the screenshots I supplied in the conversation. Passwords were entered privately and are not included.

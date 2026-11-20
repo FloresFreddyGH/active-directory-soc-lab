@@ -1,6 +1,6 @@
 # Active Directory SOC Lab
 
-**Status: In progress — Domain created and verified; Windows client installed, domain join pending.**
+**Status: In progress — CLIENT01 joined to the domain; Freddy Flores domain sign-in verified.**
 
 I am building this lab to understand Windows domain administration and investigate identity-related activity as I prepare for a SOC analyst internship. I perform the VM setup and lab exercises myself, using step-by-step guidance, and document what I can verify.
 
@@ -41,6 +41,18 @@ At the end of October 31, only the role was installed. Promotion was completed i
 
 ![Domain and services verified](screenshots/18-ad-dc01-domain-and-services-verified.png)
 
+## Completed on November 19, 2026
+
+- Installed client guest tools and confirmed clipboard sharing worked
+- Renamed Windows to CLIENT01 and set Eastern time
+- Troubleshot the stopped Windows Time service and verified successful synchronization after rediscovery
+- Configured client DNS to use DC01 and verified domain-controller discovery
+- Joined CLIENT01 to soclab.test and confirmed PartOfDomain True
+- Created Freddy Flores, added the account to GG_Lab_Employees, and completed the first password change
+- Verified `soclab\freddy.flores` signed in on CLIENT01
+
+![Freddy domain sign-in on CLIENT01](screenshots/36-ad-freddy-domain-sign-in-verified.png)
+
 ## Environment
 
 | Component | Configuration | Status |
@@ -48,20 +60,18 @@ At the end of October 31, only the role was installed. Promotion was completed i
 | Ubuntu host | Intel i5-14400F, 16 logical CPUs, 30 GiB RAM; 763 GB free disk at initial check | Verified |
 | `ad-dc01` | Windows Server 2025, 4 vCPUs, 6 GiB RAM, 80 GiB disk | Domain controller and DNS server for soclab.test |
 | Existing Wazuh server | From the previous lab | Planned monitoring destination; not connected to this server yet |
-| `ad-client01` | Windows 11 Enterprise Evaluation, 2 vCPUs, 6 GiB RAM, 80 GiB disk | Desktop reached; not domain joined |
+| `ad-client01` | Windows 11 Enterprise Evaluation, 2 vCPUs, 6 GiB RAM, 80 GiB disk | Joined to soclab.test; domain user sign-in verified |
 
 The VM is named `ad-dc01` in virt-manager and Windows is named `DC01`. Its static IPv4 address is `192.168.122.44/24`, with gateway `192.168.122.1`. After promotion, its DNS client uses its own service through `::1` and `127.0.0.1`. A matching DHCP reservation protects that address from reassignment. The default NAT network is shared with existing lab VMs; it is not a dedicated isolated AD network.
 
 ## Planned next steps
 
-1. Verify the client hostname and rename it to CLIENT01 if necessary
-2. Check client time zone, synchronization, updates, activation, and guest tools
-3. Configure client DNS to use DC01, verify domain discovery, and join soclab.test
-4. Move the client object into Workstations and test the employee's first domain sign-in
-5. Configure security auditing and Wazuh collection
-6. Generate controlled authentication and account/group changes and investigate the resulting records
+1. Verify the client computer object's location and move it to SOCLab/Workstations
+2. Verify post-join domain time synchronization, client updates/activation, and OU deletion protection
+3. Configure security auditing and Wazuh collection
+4. Generate controlled authentication and account/group changes and investigate the resulting records
 
-Client domain join, policy exercises, and SOC detections are still pending. Celebrity-inspired names represent fictional lab accounts, not actual affiliations.
+Policy exercises and SOC detections are still pending. Celebrity-inspired names represent fictional lab accounts, not actual affiliations. The client used DHCP address `192.168.122.51` during this session, with DNS set to `192.168.122.44`.
 
 ## Documentation
 
