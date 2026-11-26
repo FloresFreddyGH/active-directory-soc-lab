@@ -1,0 +1,126 @@
+{
+  "_index": "wazuh-alerts-4.x-2026.11.26",
+  "_id": "5zovFqIBInCIVs0QZMPi",
+  "_score": null,
+  "_source": {
+    "input": {
+      "type": "log"
+    },
+    "agent": {
+      "ip": "192.168.122.51",
+      "name": "CLIENT01",
+      "id": "002"
+    },
+    "manager": {
+      "name": "wazuh-server"
+    },
+    "data": {
+      "win": {
+        "eventdata": {
+          "subjectLogonId": "0x1f1501",
+          "subjectDomainName": "SOCLAB",
+          "targetLinkedLogonId": "0x0",
+          "impersonationLevel": "%%1833",
+          "ipAddress": "::1",
+          "authenticationPackageName": "Negotiate",
+          "workstationName": "CLIENT01",
+          "targetLogonId": "0x2ac45b",
+          "logonProcessName": "seclogo",
+          "logonGuid": "{45582a2c-3033-9f4d-3083-9707b17221e0}",
+          "targetUserName": "freddy.flores",
+          "keyLength": "0",
+          "elevatedToken": "%%1843",
+          "subjectUserSid": "S-1-5-21-4271055714-2757515181-3075430471-1106",
+          "processId": "0x2688",
+          "processName": "C:\\\\Windows\\\\System32\\\\svchost.exe",
+          "ipPort": "0",
+          "targetDomainName": "SOCLAB",
+          "targetUserSid": "S-1-5-21-4271055714-2757515181-3075430471-1106",
+          "virtualAccount": "%%1843",
+          "logonType": "2",
+          "subjectUserName": "freddy.flores"
+        },
+        "system": {
+          "eventID": "4624",
+          "keywords": "0x8020000000000000",
+          "providerGuid": "{54849625-5478-4994-a5ba-3e3b0328c30d}",
+          "level": "0",
+          "channel": "Security",
+          "opcode": "0",
+          "message": "\"An account was successfully logged on.\r\n\r\nSubject:\r\n\tSecurity ID:\t\tS-1-5-21-4271055714-2757515181-3075430471-1106\r\n\tAccount Name:\t\tfreddy.flores\r\n\tAccount Domain:\t\tSOCLAB\r\n\tLogon ID:\t\t0x1F1501\r\n\r\nLogon Information:\r\n\tLogon Type:\t\t2\r\n\tRestricted Admin Mode:\t-\r\n\tRemote Credential Guard:\t-\r\n\tVirtual Account:\t\tNo\r\n\tElevated Token:\t\tNo\r\n\r\nImpersonation Level:\t\tImpersonation\r\n\r\nNew Logon:\r\n\tSecurity ID:\t\tS-1-5-21-4271055714-2757515181-3075430471-1106\r\n\tAccount Name:\t\tfreddy.flores\r\n\tAccount Domain:\t\tSOCLAB\r\n\tLogon ID:\t\t0x2AC45B\r\n\tLinked Logon ID:\t\t0x0\r\n\tNetwork Account Name:\t-\r\n\tNetwork Account Domain:\t-\r\n\tLogon GUID:\t\t{45582a2c-3033-9f4d-3083-9707b17221e0}\r\n\r\nProcess Information:\r\n\tProcess ID:\t\t0x2688\r\n\tProcess Name:\t\tC:\\Windows\\System32\\svchost.exe\r\n\r\nNetwork Information:\r\n\tWorkstation Name:\tCLIENT01\r\n\tSource Network Address:\t::1\r\n\tSource Port:\t\t0\r\n\r\nDetailed Authentication Information:\r\n\tLogon Process:\t\tseclogo\r\n\tAuthentication Package:\tNegotiate\r\n\tTransited Services:\t-\r\n\tPackage Name (NTLM only):\t-\r\n\tKey Length:\t\t0\r\n\r\nThis event is generated when a logon session is created. It is generated on the computer that was accessed.\r\n\r\nThe subject fields indicate the account on the local system which requested the logon. This is most commonly a service such as the Server service, or a local process such as Winlogon.exe or Services.exe.\r\n\r\nThe logon type field indicates the kind of logon that occurred. The most common types are 2 (interactive) and 3 (network).\r\n\r\nThe New Logon fields indicate the account for whom the new logon was created, i.e. the account that was logged on.\r\n\r\nThe network fields indicate where a remote logon request originated. Workstation name is not always available and may be left blank in some cases.\r\n\r\nThe impersonation level field indicates the extent to which a process in the logon session can impersonate.\r\n\r\nThe authentication information fields provide detailed information about this specific logon request.\r\n\t- Logon GUID is a unique identifier that can be used to correlate this event with a KDC event.\r\n\t- Transited services indicate which intermediate services have participated in this logon request.\r\n\t- Package name indicates which sub-protocol was used among the NTLM protocols.\r\n\t- Key length indicates the length of the generated session key. This will be 0 if no session key was requested.\"",
+          "version": "3",
+          "systemTime": "2026-11-26T04:48:47.3576772Z",
+          "eventRecordID": "32061",
+          "threadID": "2736",
+          "computer": "CLIENT01.soclab.test",
+          "task": "12544",
+          "processID": "856",
+          "severityValue": "AUDIT_SUCCESS",
+          "providerName": "Microsoft-Windows-Security-Auditing"
+        }
+      }
+    },
+    "rule": {
+      "mail": false,
+      "level": 3,
+      "pci_dss": [
+        "10.2.5"
+      ],
+      "hipaa": [
+        "164.312.b"
+      ],
+      "tsc": [
+        "CC6.8",
+        "CC7.2",
+        "CC7.3"
+      ],
+      "description": "Windows Workstation Logon Success",
+      "groups": [
+        "windows",
+        "windows_security",
+        "authentication_success"
+      ],
+      "nist_800_53": [
+        "AU.14",
+        "AC.9"
+      ],
+      "gdpr": [
+        "IV_32.2"
+      ],
+      "firedtimes": 2,
+      "mitre": {
+        "technique": [
+          "Valid Accounts"
+        ],
+        "id": [
+          "T1078"
+        ],
+        "tactic": [
+          "Defense Evasion",
+          "Persistence",
+          "Privilege Escalation",
+          "Initial Access"
+        ]
+      },
+      "id": "60118",
+      "gpg13": [
+        "7.1",
+        "7.2"
+      ]
+    },
+    "location": "EventChannel",
+    "decoder": {
+      "name": "windows_eventchannel"
+    },
+    "id": "1795668529.110425",
+    "timestamp": "2026-11-26T04:48:49.120+0000"
+  },
+  "fields": {
+    "timestamp": [
+      "2026-11-26T04:48:49.120Z"
+    ]
+  },
+  "sort": [
+    1795668529120
+  ]
+}

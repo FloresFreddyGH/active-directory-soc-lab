@@ -2,14 +2,12 @@
 
 **Title:** Active Directory SOC Lab
 
-**Status:** In progress — domain infrastructure, client domain join, and first employee sign-in verified
+**Status:** In progress — domain infrastructure and workstation authentication monitoring verified
 
-I built a Windows Server 2025 domain controller and Windows 11 Enterprise Evaluation client on Ubuntu/QEMU/KVM. I created soclab.test with DNS, verified domain services and discovery records, organized OUs, and created employee accounts and a security group.
+I built a Windows Server 2025 domain controller and Windows 11 client on Ubuntu/QEMU/KVM, configured soclab.test, created users and groups, and joined CLIENT01. I moved the client into a workstation OU and verified an auditing GPO with gpresult and auditpol.
 
-I troubleshot guest clipboard integration and a stopped/unsynchronized Windows Time service, configured client DNS, and joined CLIENT01 to the domain. I verified domain membership separately from the local sign-in identity, then created my Freddy Flores domain account, added it to GG_Lab_Employees, completed its required first password change, and confirmed soclab\freddy.flores was signed in on CLIENT01.
+I connected CLIENT01 to Wazuh and investigated controlled failed and successful domain-user logons. Windows events 4625 and 4624 appeared as Wazuh rules 60122 and 60118. I verified target identities, initiating accounts, source addresses, timestamps, and logon types, then preserved JSON evidence and a CSV summary.
 
-The project demonstrates Windows domain administration, DNS troubleshooting, time synchronization checks, account provisioning, group membership management, and evidence-based documentation. It is the foundation for future SOC investigations; auditing configuration, Wazuh collection, policy exercises, and detection results are not yet completed.
+Troubleshooting included VM identity confusion, guest clipboard integration, Windows Time, password-change requirements, dashboard access, and search time ranges. Domain-controller collection and account/group-change exercises remain pending.
 
-Evidence: screenshots 01–36 and journal entries through November 19, 2026. The Lamine Yamal account is a fictional test identity. This project is separate from my completed Wazuh and Azure labs.
-
-Suggested website milestone: **Joined a Windows 11 client to an Active Directory domain and verified a first domain-user sign-in after troubleshooting DNS, guest integration, and time synchronization.**
+See [the investigation](authentication-investigation.md) for evidence and limitations. Lab account names do not imply actual affiliations. This is a guided hands-on lab, with AI assistance for instructions and documentation.

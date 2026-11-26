@@ -187,3 +187,7 @@ Results: `soclab\freddy.flores` and `CLIENT01`. No administrative group membersh
 3. Plan and configure security auditing and Wazuh collection, then investigate controlled authentication and account/group events.
 
 Client domain join and Freddy's domain sign-in are verified. Policy deployment, Wazuh integration, shutdown, and snapshots remain unverified or pending.
+
+## Current resume point — November 25, 2026
+
+Workstation GPO auditing, Wazuh enrollment, and successful/failed authentication detection are verified. See [authentication investigation](authentication-investigation.md) for commands and exported evidence. Earlier pending-task notes above describe their historical session state. Next verify domain time and OU protection, then plan DC01 account/group auditing.

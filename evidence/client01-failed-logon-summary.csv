@@ -1,0 +1,2 @@
+timestamp,agent.name,rule.description,rule.level,rule.id
+"Nov 24, 2026 @ 15:27:35.680",CLIENT01,Logon Failure - Unknown user or bad password,5,60122

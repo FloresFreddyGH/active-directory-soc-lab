@@ -73,3 +73,11 @@ On DC01, I created my own regular domain account, Freddy Flores, and added it to
 I performed these steps myself and documented the results. The domain sign-in is complete, but I have not yet collected its security events in Wazuh or completed a detection exercise. Moving the computer object to Workstations and verifying post-join domain time behavior remain next-session work. No shutdown or snapshot is claimed.
 
 Evidence: screenshots 30–36, copied from the screenshots I supplied in the conversation. Passwords were entered privately and are not included.
+
+## November 22–25, 2026 — Workstation auditing and authentication investigation
+
+I moved CLIENT01 into Workstations, linked the auditing GPO, and verified it on the client after initially checking the wrong VM (DC01). I restored access to my domain account after a password-change problem and recovered Wazuh dashboard access. I installed the agent on CLIENT01 and confirmed it was Active as agent 002.
+
+I generated an incorrect-password attempt and found event 4625 in Wazuh, then ran a successful domain-user session and found event 4624. I compared the initiating and target accounts, logon type, loopback source, and rule metadata. I exported the failed alert as CSV and both events as JSON. The successful event was late November 25 Eastern, with a November 26 UTC timestamp.
+
+See [the investigation](authentication-investigation.md) for verified fields, troubleshooting, remaining work, and exported evidence. No DC01 ingestion, account-change detection, or complete project finish is claimed.

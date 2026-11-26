@@ -1,6 +1,6 @@
 # Active Directory SOC Lab
 
-**Status: In progress — CLIENT01 joined to the domain; Freddy Flores domain sign-in verified.**
+**Status: In progress — workstation auditing and successful/failed domain-user authentication verified in Wazuh.**
 
 I am building this lab to understand Windows domain administration and investigate identity-related activity as I prepare for a SOC analyst internship. I perform the VM setup and lab exercises myself, using step-by-step guidance, and document what I can verify.
 
@@ -59,19 +59,24 @@ At the end of October 31, only the role was installed. Promotion was completed i
 |---|---|---|
 | Ubuntu host | Intel i5-14400F, 16 logical CPUs, 30 GiB RAM; 763 GB free disk at initial check | Verified |
 | `ad-dc01` | Windows Server 2025, 4 vCPUs, 6 GiB RAM, 80 GiB disk | Domain controller and DNS server for soclab.test |
-| Existing Wazuh server | From the previous lab | Planned monitoring destination; not connected to this server yet |
+| Existing Wazuh server | From the previous lab | Receiving CLIENT01 events as agent 002; DC01 enrollment pending |
 | `ad-client01` | Windows 11 Enterprise Evaluation, 2 vCPUs, 6 GiB RAM, 80 GiB disk | Joined to soclab.test; domain user sign-in verified |
 
 The VM is named `ad-dc01` in virt-manager and Windows is named `DC01`. Its static IPv4 address is `192.168.122.44/24`, with gateway `192.168.122.1`. After promotion, its DNS client uses its own service through `::1` and `127.0.0.1`. A matching DHCP reservation protects that address from reassignment. The default NAT network is shared with existing lab VMs; it is not a dedicated isolated AD network.
 
-## Planned next steps
+## November 22–25: Auditing and Wazuh investigation
 
-1. Verify the client computer object's location and move it to SOCLab/Workstations
-2. Verify post-join domain time synchronization, client updates/activation, and OU deletion protection
-3. Configure security auditing and Wazuh collection
-4. Generate controlled authentication and account/group changes and investigate the resulting records
+Moved CLIENT01 into SOCLab/Workstations, applied the workstation auditing GPO, and verified effective settings on the client. Installed Wazuh agent 4.14.8 and confirmed agent 002 Active. Generated and investigated failed (4625 / rule 60122) and successful (4624 / rule 60118) logons for SOCLAB\freddy.flores.
 
-Policy exercises and SOC detections are still pending. Celebrity-inspired names represent fictional lab accounts, not actual affiliations. The client used DHCP address `192.168.122.51` during this session, with DNS set to `192.168.122.44`.
+See the [authentication investigation and evidence](docs/authentication-investigation.md) for comparison, timestamps, reproduction, and limitations. The successful test occurred late November 25 Eastern (November 26 UTC).
+
+## Remaining work
+
+1. Verify post-join domain time synchronization, client updates/activation, and OU deletion protection
+2. Enroll DC01 and test account/group-change auditing if completing the broader domain-monitoring scope
+3. Review evidence, finish the final write-up, and publish the portfolio update
+
+The core workstation authentication demonstration is verified. The lab remains in progress. Celebrity-inspired names represent fictional lab accounts, not actual affiliations.
 
 ## Documentation
 
