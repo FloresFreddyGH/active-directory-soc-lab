@@ -51,3 +51,5 @@ Screenshot 13 uses the later up-to-date capture, not the earlier in-progress ima
 - [36-ad-freddy-domain-sign-in-verified](36-ad-freddy-domain-sign-in-verified.png)
 
 Screenshots 30–36 were copied from supplied conversation attachments. Screenshot 35 shows only password-change confirmation, not a password. Earlier pending-state captions describe the earlier sessions; screenshot 36 verifies the latest sign-in milestone.
+
+- [58 — CLIENT01 domain time verification](58-client01-domain-time-verification.png): hostname, DC01 source, Leap Indicator 0, stratum 2, and last successful sync. Numbering follows the hands-on session; not all intermediate screenshots have been imported.

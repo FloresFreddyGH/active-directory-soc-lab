@@ -53,4 +53,4 @@ An account check showed Enabled=True, LockedOut=False, PasswordExpired=True and 
 
 Wazuh dashboard access was recovered with the supported single-admin password reset tool. Direct indexer authentication subsequently returned HTTP 200. Credentials and installer archives are excluded from this repository. A private credential rotation remains advisable following credentials shared during troubleshooting.
 
-DC01 is not yet enrolled in Wazuh. Account/group-change monitoring, post-join domain time verification, OU deletion-protection verification, and final documentation review remain outstanding. This exercise verifies workstation authentication collection, not comprehensive domain monitoring.
+DC01 is not yet enrolled in Wazuh. Account/group-change monitoring, OU deletion-protection verification, and final documentation review remain outstanding. This exercise verifies workstation authentication collection, not comprehensive domain monitoring.

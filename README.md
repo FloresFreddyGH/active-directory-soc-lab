@@ -72,7 +72,7 @@ See the [authentication investigation and evidence](docs/authentication-investig
 
 ## Remaining work
 
-1. Verify post-join domain time synchronization, client updates/activation, and OU deletion protection
+1. Verify client updates/activation and OU deletion protection
 2. Enroll DC01 and test account/group-change auditing if completing the broader domain-monitoring scope
 3. Review evidence, finish the final write-up, and publish the portfolio update
 

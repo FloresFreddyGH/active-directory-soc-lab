@@ -190,4 +190,4 @@ Client domain join and Freddy's domain sign-in are verified. Policy deployment, 
 
 ## Current resume point — November 25, 2026
 
-Workstation GPO auditing, Wazuh enrollment, and successful/failed authentication detection are verified. See [authentication investigation](authentication-investigation.md) for commands and exported evidence. Earlier pending-task notes above describe their historical session state. Next verify domain time and OU protection, then plan DC01 account/group auditing.
+Workstation GPO auditing, Wazuh enrollment, and successful/failed authentication detection are verified. See [authentication investigation](authentication-investigation.md) for commands and exported evidence. Earlier pending-task notes above describe their historical session state. Domain time was verified against DC01 on November 25. Next verify OU protection, then plan DC01 account/group auditing.

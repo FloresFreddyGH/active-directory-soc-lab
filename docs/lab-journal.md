@@ -81,3 +81,9 @@ I moved CLIENT01 into Workstations, linked the auditing GPO, and verified it on 
 I generated an incorrect-password attempt and found event 4625 in Wazuh, then ran a successful domain-user session and found event 4624. I compared the initiating and target accounts, logon type, loopback source, and rule metadata. I exported the failed alert as CSV and both events as JSON. The successful event was late November 25 Eastern, with a November 26 UTC timestamp.
 
 See [the investigation](authentication-investigation.md) for verified fields, troubleshooting, remaining work, and exported evidence. No DC01 ingestion, account-change detection, or complete project finish is claimed.
+
+### Post-join domain time verification
+
+On CLIENT01, elevated PowerShell returned hostname CLIENT01 and time source DC01.soclab.test (192.168.122.44). Windows Time reported Leap Indicator 0 (no warning), stratum 2, and a last successful synchronization at November 25, 2026, 23:55:07 local time. This verifies the client's reported synchronization with the domain controller; it does not independently validate DC01's upstream time source or absolute clock accuracy. Root dispersion was approximately 17.79 seconds, so this output is not a precision-time measurement.
+
+Evidence: [CLIENT01 domain time](../screenshots/58-client01-domain-time-verification.png).
